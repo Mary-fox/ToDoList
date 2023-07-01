@@ -8,6 +8,7 @@ function TodoForm() {
   const [editingIndex, setEditingIndex] = useState(null); //текущая задача
   const [editValue, setEditValue] = useState(""); // значение текущей задачи
   const [isEditing, setIsEditing] = useState(false); //состояние отображения
+  const [filterTask, setFilterTask] = useState("");
 
   function handleChange(e) {
     setInputValue(e.target.value);
@@ -61,45 +62,55 @@ function TodoForm() {
   }
   return (
     <div className="wrapper">
-      <h1>My Todo List</h1>
+      <h1 className="tasks__title">My Todo List</h1>
+      <input
+        value={filterTask}
+        type="text"
+        placeholder="filter"
+        onChange={(e) => setFilterTask(e.target.value)}
+      />
       <ol className="tasks">
-        {tasks.map((task, index) => (
-          <li key={index} className="tasks__item">
-            <input
-              type="checkbox"
-              checked={task.completed}
-              onChange={() => handleComplete(index)}
-            />
-            {index === editingIndex && isEditing ? (
-              <>
-                <input
-                  type="text"
-                  value={editValue}
-                  onChange={(e) => setEditValue(e.target.value)}
-                />
-                <div className="tasks__buttons">
-                  <button onClick={handleSave}>Save</button>
-                  <button onClick={handleCancel}>Cancel</button>
-                </div>
-              </>
-            ) : (
-              <>
-                <span
-                  className={`tasks__text ${
-                    task.completed ? "tasks__completed" : ""
-                  }`}
-                >
-                  {task.text}
-                </span>
+        {tasks
+          .filter((task) =>
+            task.text.toUpperCase().includes(filterTask.toUpperCase())
+          )
+          .map((task, index) => (
+            <li key={index} className="tasks__item">
+              <input
+                type="checkbox"
+                checked={task.completed}
+                onChange={() => handleComplete(index)}
+              />
+              {index === editingIndex && isEditing ? (
+                <>
+                  <input
+                    type="text"
+                    value={editValue}
+                    onChange={(e) => setEditValue(e.target.value)}
+                  />
+                  <div className="tasks__buttons">
+                    <button onClick={handleSave}>Save</button>
+                    <button onClick={handleCancel}>Cancel</button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <span
+                    className={`tasks__text ${
+                      task.completed ? "tasks__completed" : ""
+                    }`}
+                  >
+                    {task.text}
+                  </span>
 
-                <div className="tasks__buttons">
-                  <button onClick={() => handleEdit(index)}>Edit</button>
-                  <button onClick={() => handleDelete(index)}>Delete</button>
-                </div>
-              </>
-            )}
-          </li>
-        ))}
+                  <div className="tasks__buttons">
+                    <button onClick={() => handleEdit(index)}>Edit</button>
+                    <button onClick={() => handleDelete(index)}>Delete</button>
+                  </div>
+                </>
+              )}
+            </li>
+          ))}
       </ol>
       <form className="tasks__form">
         <input
