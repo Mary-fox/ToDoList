@@ -15,7 +15,8 @@ function TodoForm() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    setTasks([...tasks, inputValue]);
+    if (inputValue.trim() === "") return;
+    setTasks([...tasks, { text: inputValue, completed: false }]);
     setInputValue("");
   }
 
@@ -30,7 +31,7 @@ function TodoForm() {
 
   function handleEdit(index) {
     setEditingIndex(index);
-    setEditValue(tasks[index]);
+    setEditValue(tasks[index].text);
     setIsEditing(true);
   }
 
@@ -41,17 +42,66 @@ function TodoForm() {
 
   function handleSave() {
     const newTasks = tasks.map((task, index) =>
-      index === editingIndex ? editValue : task
+      index === editingIndex ? { ...task, text: editValue } : task
     );
     setTasks(newTasks);
     setEditingIndex(null);
     setIsEditing(false);
   }
-
+  function handleComplete(index) {
+    const newTasks = tasks.map((task, i) =>
+      i === index
+        ? {
+            ...task,
+            completed: !task.completed,
+          }
+        : task
+    );
+    setTasks(newTasks);
+  }
   return (
-    <div>
-      <h1>My todo List</h1>
-      <form>
+    <div className="wrapper">
+      <h1>My Todo List</h1>
+      <ol className="tasks">
+        {tasks.map((task, index) => (
+          <li key={index} className="tasks__item">
+            <input
+              type="checkbox"
+              checked={task.completed}
+              onChange={() => handleComplete(index)}
+            />
+            {index === editingIndex && isEditing ? (
+              <>
+                <input
+                  type="text"
+                  value={editValue}
+                  onChange={(e) => setEditValue(e.target.value)}
+                />
+                <div className="tasks__buttons">
+                  <button onClick={handleSave}>Save</button>
+                  <button onClick={handleCancel}>Cancel</button>
+                </div>
+              </>
+            ) : (
+              <>
+                <span
+                  className={`tasks__text ${
+                    task.completed ? "tasks__completed" : ""
+                  }`}
+                >
+                  {task.text}
+                </span>
+
+                <div className="tasks__buttons">
+                  <button onClick={() => handleEdit(index)}>Edit</button>
+                  <button onClick={() => handleDelete(index)}>Delete</button>
+                </div>
+              </>
+            )}
+          </li>
+        ))}
+      </ol>
+      <form className="tasks__form">
         <input
           type="text"
           value={inputValue}
@@ -60,29 +110,6 @@ function TodoForm() {
         />
         <button onClick={handleSubmit}>Add Todo</button>
       </form>
-      <ul>
-        {tasks.map((task, index) => (
-          <li key={index}>
-            {index === editingIndex && isEditing ? (
-              <>
-                <input
-                  type="text"
-                  value={editValue}
-                  onChange={(e) => setEditValue(e.target.value)}
-                />
-                <button onClick={handleSave}>Save</button>
-                <button onClick={handleCancel}>Cancel</button>
-              </>
-            ) : (
-              <>
-                {task}
-                <button onClick={() => handleEdit(index)}>Edit</button>
-                <button onClick={() => handleDelete(index)}>Delete</button>
-              </>
-            )}
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }

@@ -1,4 +1,45 @@
-.App {
-  text-align: center;
+.wrapper {
+  max-width: 50%;
+  margin: 0 auto;
+
+}
+input {
+  cursor: pointer;
+}
+button {
+  cursor: pointer;
+}
+.tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0;
+  counter-reset: task-counter;
+}
+.tasks__item {
+  display: flex;
+  align-items: center;
+  counter-increment: task-counter;
+}
+.tasks__item::before {
+  content: counter(task-counter) ". ";
+  margin-right: 0.5em;
+}
+.tasks__text {
+  flex-grow: 1;
 }
 
+.tasks__buttons {
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+}
+
+.tasks__completed {
+  text-decoration: line-through;
+  color: grey;
+}
+.tasks__form {
+  display: flex;
+  gap: 10px;
+}
