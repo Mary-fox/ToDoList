@@ -1,0 +1,17 @@
+body {
+  background-color: #1f1f1f;
+}
+.wrapper {
+  max-width: 50%;
+  margin: 0 auto;
+
+}
+input {
+  cursor: pointer;
+}
+button {
+  cursor: pointer;
+}
+.tasks__title {
+  color: #fff;
+}
