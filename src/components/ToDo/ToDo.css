@@ -1,0 +1,16 @@
+
+input {
+  cursor: pointer;
+}
+button {
+  cursor: pointer;
+}
+.tasks__title {
+  color: #fff;
+}
+.tasks__block {
+  max-width: 50%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
