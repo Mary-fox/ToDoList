@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./ToDo.css";
 import TaskForm from "../TaskForm/TaskForm";
 import TaskList from "../TaskList/TaskList";
-import TaskFilter from "../TaskFilter/TaskFilter";
 
 function ToDo() {
   const [tasks, setTasks] = useState([]);
@@ -11,7 +10,12 @@ function ToDo() {
   return (
     <div className="tasks__block">
       <h1 className="tasks__title">My Todo List</h1>
-      <TaskFilter filterTask={filterTask} setFilterTask={setFilterTask} />
+      <input
+        value={filterTask}
+        type="text"
+        placeholder="filter"
+        onChange={(e) => setFilterTask(e.target.value)}
+      />
       <TaskList tasks={tasks} setTasks={setTasks} filterTask={filterTask} />
       <TaskForm tasks={tasks} setTasks={setTasks} />
     </div>
