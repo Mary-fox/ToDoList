@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./TaskList.css";
 
-function TaskList({ tasks, filterTask, setTasks }) {
+function TaskList({ tasks, filteredTasks, setTasks }) {
   const [editingIndex, setEditingIndex] = useState(null); //текущая задача
   const [editValue, setEditValue] = useState(""); // значение текущей задачи
   const [isEditing, setIsEditing] = useState(false); //состояние отображения
@@ -46,10 +46,6 @@ function TaskList({ tasks, filterTask, setTasks }) {
     );
     setTasks(newTasks);
   }
-
-  const filteredTasks = tasks.filter((task) =>
-    task.text.toUpperCase().includes(filterTask.toUpperCase())
-  );
 
   return (
     <ol className="tasks">

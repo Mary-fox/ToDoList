@@ -1,19 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import "./TaskForm.css";
 
 function TaskForm({ tasks, setTasks }) {
   const [inputValue, setInputValue] = useState("");
 
-  function handleChange(e) {
+  const handleChange = useCallback((e) => {
     setInputValue(e.target.value);
-  }
+  }, []);
 
-  function handleSubmit(e) {
+  const handleSubmit = useCallback((e) => {
     e.preventDefault();
     if (inputValue.trim() === "") return;
     setTasks([...tasks, { text: inputValue, completed: false }]);
     setInputValue("");
-  }
+  }, [inputValue, tasks, setTasks]);
 
   return (
     <form className="tasks__form">
@@ -28,4 +28,4 @@ function TaskForm({ tasks, setTasks }) {
   );
 }
 
-export default TaskForm;
+export default React.memo(TaskForm);
