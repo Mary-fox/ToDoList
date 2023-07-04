@@ -23,7 +23,7 @@ function ToDo() {
         onChange={(e) => setFilterTask(e.target.value)}
       />
       <TaskList tasks={tasks} setTasks={setTasks} filteredTasks={filteredTasks} />
-      <TaskForm tasks={tasks} setTasks={setTasks} />
+      <TaskForm setTasks={setTasks} />
     </div>
   );
 }

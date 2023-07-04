@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import "./TaskForm.css";
 
-function TaskForm({ tasks, setTasks }) {
+function TaskForm({setTasks }) {
   const [inputValue, setInputValue] = useState("");
 
   const handleChange = useCallback((e) => {
@@ -11,9 +11,9 @@ function TaskForm({ tasks, setTasks }) {
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
     if (inputValue.trim() === "") return;
-    setTasks([...tasks, { text: inputValue, completed: false }]);
+    setTasks(prevTasks => [...prevTasks, { text: inputValue, completed: false }]);
     setInputValue("");
-  }, [inputValue, tasks, setTasks]);
+  }, [inputValue, setTasks]);
 
   return (
     <form className="tasks__form">
