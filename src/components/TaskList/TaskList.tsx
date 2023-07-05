@@ -25,7 +25,8 @@ function TaskList({ tasks, filteredTasks, setTasks }: TaskListProps) {
     if (index === editingIndex) {
       resetEditing()
     }
-    const newTasks = tasks.filter((_, i) => i !== index);
+    const taskToDelete = tasks[index];
+    const newTasks = tasks.filter((task) => task !== taskToDelete);
     setTasks(newTasks);
   }
 
@@ -61,14 +62,17 @@ function TaskList({ tasks, filteredTasks, setTasks }: TaskListProps) {
 
   return (
     <ol className="tasks">
-      {filteredTasks.map((task, index) => (
-        <li key={index} className="task">
+      {filteredTasks.map((task, index) => {
+        const originalIndex = tasks.findIndex((t) => t === task);
+
+        return (
+          <li key={index} className="task">
           <input
             type="checkbox"
             checked={task.completed}
-            onChange={() => handleComplete(index)}
+            onChange={() => handleComplete(originalIndex)}
           />
-          {index === editingIndex && isEditing ? (
+          {originalIndex === editingIndex && isEditing ? (
             <>
               <input
                 type="text"
@@ -91,13 +95,14 @@ function TaskList({ tasks, filteredTasks, setTasks }: TaskListProps) {
               </span>
 
               <div className="task__buttons">
-                <button onClick={() => handleEdit(index)}>Edit</button>
-                <button onClick={() => handleDelete(index)}>Delete</button>
+                <button onClick={() => handleEdit(originalIndex)}>Edit</button>
+                <button onClick={() => handleDelete(originalIndex)}>Delete</button>
               </div>
             </>
           )}
-        </li>
-      ))}
+       </li>
+        );
+      })}
     </ol>
   );
 }
