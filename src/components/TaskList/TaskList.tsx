@@ -1,16 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, Dispatch, SetStateAction } from "react"
 import "./TaskList.css";
 
-function TaskList({ tasks, filteredTasks, setTasks }) {
-  const [editingIndex, setEditingIndex] = useState(null); //текущая задача
-  const [editValue, setEditValue] = useState(""); // значение текущей задачи
-  const [isEditing, setIsEditing] = useState(false); //состояние отображения
+interface Task {
+  text: string;
+  completed: boolean;
+}
+
+interface TaskListProps {
+  tasks: Task[];
+  filteredTasks: Task[];
+  setTasks: Dispatch<SetStateAction<Task[]>>;
+}
+
+function TaskList({ tasks, filteredTasks, setTasks }: TaskListProps) {
+  const [editingIndex, setEditingIndex] =  useState<number | null>(null); //текущая задача
+  const [editValue, setEditValue] = useState<string>(""); // значение текущей задачи
+  const [isEditing, setIsEditing] = useState<boolean>(false);//состояние отображения
 
   function resetEditing() {
     setEditingIndex(null);
     setIsEditing(false);
   }
-  function handleDelete(index) {
+  function handleDelete(index: number) {
     if (index === editingIndex) {
       resetEditing()
     }
@@ -18,7 +29,7 @@ function TaskList({ tasks, filteredTasks, setTasks }) {
     setTasks(newTasks);
   }
 
-  function handleEdit(index) {
+  function handleEdit(index: number) {
     setEditingIndex(index);
     setEditValue(tasks[index].text);
     setIsEditing(true);
@@ -36,7 +47,7 @@ function TaskList({ tasks, filteredTasks, setTasks }) {
     resetEditing()
   }
 
-  function handleComplete(index) {
+  function handleComplete(index: number) {
     const newTasks = tasks.map((task, i) =>
       i === index
         ? {

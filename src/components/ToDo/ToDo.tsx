@@ -3,9 +3,14 @@ import "./ToDo.css";
 import TaskForm from "../TaskForm/TaskForm";
 import TaskList from "../TaskList/TaskList";
 
+interface Task {
+  text: string;
+  completed: boolean;
+}
+
 function ToDo() {
-  const [tasks, setTasks] = useState([]);
-  const [taskFilter, setTaskFilter] = useState("");
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [taskFilter, setTaskFilter] = useState<string>("");
 
   const filteredTasks = useMemo(() => {
     return tasks.filter(task =>
