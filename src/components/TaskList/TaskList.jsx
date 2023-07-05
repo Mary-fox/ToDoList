@@ -6,10 +6,13 @@ function TaskList({ tasks, filteredTasks, setTasks }) {
   const [editValue, setEditValue] = useState(""); // значение текущей задачи
   const [isEditing, setIsEditing] = useState(false); //состояние отображения
 
+  function resetEditing() {
+    setEditingIndex(null);
+    setIsEditing(false);
+  }
   function handleDelete(index) {
     if (index === editingIndex) {
-      setEditingIndex(null);
-      setIsEditing(false);
+      resetEditing()
     }
     const newTasks = tasks.filter((_, i) => i !== index);
     setTasks(newTasks);
@@ -22,8 +25,7 @@ function TaskList({ tasks, filteredTasks, setTasks }) {
   }
 
   function handleCancel() {
-    setEditingIndex(null);
-    setIsEditing(false);
+    resetEditing()
   }
 
   function handleSave() {
@@ -31,8 +33,7 @@ function TaskList({ tasks, filteredTasks, setTasks }) {
       index === editingIndex ? { ...task, text: editValue } : task
     );
     setTasks(newTasks);
-    setEditingIndex(null);
-    setIsEditing(false);
+    resetEditing()
   }
 
   function handleComplete(index) {
@@ -50,7 +51,7 @@ function TaskList({ tasks, filteredTasks, setTasks }) {
   return (
     <ol className="tasks">
       {filteredTasks.map((task, index) => (
-        <li key={index} className="tasks__item">
+        <li key={index} className="task">
           <input
             type="checkbox"
             checked={task.completed}
@@ -63,7 +64,7 @@ function TaskList({ tasks, filteredTasks, setTasks }) {
                 value={editValue}
                 onChange={(e) => setEditValue(e.target.value)}
               />
-              <div className="tasks__buttons">
+              <div className="task__buttons">
                 <button onClick={handleSave}>Save</button>
                 <button onClick={handleCancel}>Cancel</button>
               </div>
@@ -71,14 +72,14 @@ function TaskList({ tasks, filteredTasks, setTasks }) {
           ) : (
             <>
               <span
-                className={`tasks__text ${
-                  task.completed ? "tasks__completed" : ""
+                className={`task__text ${
+                  task.completed ? "task__completed" : ""
                 }`}
               >
                 {task.text}
               </span>
 
-              <div className="tasks__buttons">
+              <div className="task__buttons">
                 <button onClick={() => handleEdit(index)}>Edit</button>
                 <button onClick={() => handleDelete(index)}>Delete</button>
               </div>

@@ -8,27 +8,27 @@
     padding: 0;
     counter-reset: task-counter;
   }
-  .tasks__item {
+  .task {
     display: flex;
     align-items: center;
     gap: 5px;
     counter-increment: task-counter;
   }
-  .tasks__item::before {
+  .task::before {
     content: counter(task-counter) ". ";
     margin-right: 0.5em;
   }
-  .tasks__text {
+  .task__text {
     flex-grow: 1;
   }
   
-  .tasks__buttons {
+  .task__buttons {
     margin-left: auto;
     display: flex;
     gap: 10px;
   }
   
-  .tasks__completed {
+  .task__completed {
     text-decoration: line-through;
     color: grey;
   }

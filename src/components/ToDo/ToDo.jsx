@@ -5,22 +5,22 @@ import TaskList from "../TaskList/TaskList";
 
 function ToDo() {
   const [tasks, setTasks] = useState([]);
-  const [filterTask, setFilterTask] = useState("");
+  const [taskFilter, setTaskFilter] = useState("");
 
   const filteredTasks = useMemo(() => {
     return tasks.filter(task =>
-      task.text.toUpperCase().includes(filterTask.toUpperCase())
+      task.text.toUpperCase().includes(taskFilter.toUpperCase())
     );
-  }, [tasks, filterTask]);
+  }, [tasks, taskFilter]);
   
   return (
     <div className="tasks__block">
       <h1 className="tasks__title">My Todo List</h1>
       <input
-        value={filterTask}
+        value={taskFilter}
         type="text"
         placeholder="filter"
-        onChange={(e) => setFilterTask(e.target.value)}
+        onChange={(e) => setTaskFilter(e.target.value)}
       />
       <TaskList tasks={tasks} setTasks={setTasks} filteredTasks={filteredTasks} />
       <TaskForm setTasks={setTasks} />
