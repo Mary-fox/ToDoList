@@ -1,10 +1,6 @@
 import React, { useState, Dispatch, SetStateAction } from "react"
+import { Task } from "../ToDo/ToDo";
 import "./TaskList.css";
-
-interface Task {
-  text: string;
-  completed: boolean;
-}
 
 interface TaskListProps {
   tasks: Task[];
@@ -12,7 +8,7 @@ interface TaskListProps {
   setTasks: Dispatch<SetStateAction<Task[]>>;
 }
 
-function TaskList({ tasks, filteredTasks, setTasks }: TaskListProps) {
+const TaskList: React.FC<TaskListProps> = ({ tasks, filteredTasks, setTasks }) => {
   const [editingIndex, setEditingIndex] =  useState<number | null>(null); //текущая задача
   const [editValue, setEditValue] = useState<string>(""); // значение текущей задачи
   const [isEditing, setIsEditing] = useState<boolean>(false);//состояние отображения
@@ -88,7 +84,7 @@ function TaskList({ tasks, filteredTasks, setTasks }: TaskListProps) {
             <>
               <span
                 className={`task__text ${
-                  task.completed ? "task__completed" : ""
+                  task.completed ? "task_completed" : ""
                 }`}
               >
                 {task.text}

@@ -1,35 +1,31 @@
- .tasks  {
-    color: #fff;
-  }
-  .tasks {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 0;
-    counter-reset: task-counter;
-  }
-  .task {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    counter-increment: task-counter;
-  }
-  .task::before {
-    content: counter(task-counter) ". ";
-    margin-right: 0.5em;
-  }
-  .task__text {
-    flex-grow: 1;
-  }
-  
-  .task__buttons {
-    margin-left: auto;
-    display: flex;
-    gap: 10px;
-  }
-  
-  .task__completed {
-    text-decoration: line-through;
-    color: grey;
-  }
+.tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0;
+  counter-reset: task-counter;
+  color: #fff;
+}
+.task {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  counter-increment: task-counter;
+}
+.task::before {
+  content: counter(task-counter) ". ";
+  margin-right: 0.5em;
+}
+.task__text {
+  flex-grow: 1;
+}
+.task__buttons {
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+}
+.task_completed {
+  text-decoration: line-through;
+  color: grey;
+}
   

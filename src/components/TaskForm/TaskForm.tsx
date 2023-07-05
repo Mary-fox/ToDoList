@@ -1,15 +1,12 @@
 import React, { useState, useCallback, ChangeEvent } from "react";
+import { Task } from "../ToDo/ToDo";
 import "./TaskForm.css";
 
-interface Task {
-  text: string;
-  completed: boolean;
-}
 interface TaskFormProps {
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
 }
 
-function TaskForm({ setTasks }: TaskFormProps) {
+const TaskForm: React.FC<TaskFormProps> = ({ setTasks }) => {
   const [inputValue, setInputValue] = useState<string>("");
 
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {

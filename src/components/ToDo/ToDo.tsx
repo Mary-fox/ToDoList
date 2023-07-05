@@ -3,7 +3,7 @@ import "./ToDo.css";
 import TaskForm from "../TaskForm/TaskForm";
 import TaskList from "../TaskList/TaskList";
 
-interface Task {
+export interface Task {
   text: string;
   completed: boolean;
 }
