@@ -1,12 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import "./ToDo.css";
+import { Task } from "../TaskItem/TaskItem";
 import TaskForm from "../TaskForm/TaskForm";
 import TaskList from "../TaskList/TaskList";
 
-export interface Task {
-  text: string;
-  completed: boolean;
-}
+
 
 function ToDo() {
   const [tasks, setTasks] = useState<Task[]>([]);

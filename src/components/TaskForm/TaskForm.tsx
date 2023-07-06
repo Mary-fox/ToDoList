@@ -1,5 +1,5 @@
 import React, { useState, useCallback, ChangeEvent } from "react";
-import { Task } from "../ToDo/ToDo";
+import { Task } from "../TaskItem/TaskItem";
 import "./TaskForm.css";
 
 interface TaskFormProps {
