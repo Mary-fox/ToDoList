@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from "react";
 import "./TaskItem.css";
+import classNames from "classnames";
 
 export interface Task {
   text: string;
@@ -66,11 +67,12 @@ const TaskItem: React.FC<TaskItemProps> = ({
     );
     setTasks(newTasks);
   }
+
+  //определяем индекс текущей задачи, чтобы выполнять операции над ней(редактирование или удаление.)Чтобы не было ошибок с индексом при отфильтрованном индексе.
   const originalIndex = useMemo(
     () => tasks.findIndex((t) => t === task),
     [tasks, task],
   );
-  //определяем индекс текущей задачи, чтобы выполнять операции над ней(редактирование или удаление.)Чтобы не было ошибок с индексом при отфильтрованном индексе.
 
   return (
     <li key={index} className="task">
@@ -94,7 +96,9 @@ const TaskItem: React.FC<TaskItemProps> = ({
       ) : (
         <>
           <span
-            className={`task__text ${task.completed ? "task_completed" : ""}`}
+            className={classNames("task__text", {
+              task_completed: task.completed,
+            })}
           >
             {task.text}
           </span>
