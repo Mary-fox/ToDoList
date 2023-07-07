@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import "./TaskItem.css";
 
 export interface Task {
@@ -13,20 +13,25 @@ interface TaskItemProps {
   tasks: Task[];
 }
 
-const TaskItem: React.FC<TaskItemProps> = ({  task, setTasks, index, tasks  }) => {
-    const [editingIndex, setEditingIndex] =  useState<number | null>(null); //текущая задача
-    const [editValue, setEditValue] = useState<string>(""); // значение текущей задачи
-    const [isEditing, setIsEditing] = useState<boolean>(false);//состояние отображения
+const TaskItem: React.FC<TaskItemProps> = ({
+  task,
+  setTasks,
+  index,
+  tasks,
+}) => {
+  const [editingIndex, setEditingIndex] = useState<number | null>(null); //текущая задача
+  const [editValue, setEditValue] = useState<string>(""); // значение текущей задачи
+  const [isEditing, setIsEditing] = useState<boolean>(false); //состояние отображения
 
   function resetEditing() {
-      setEditingIndex(null);
-      setIsEditing(false);
+    setEditingIndex(null);
+    setIsEditing(false);
   }
 
   function handleDelete(index: number) {
     if (index === editingIndex) {
-      resetEditing()
-  }
+      resetEditing();
+    }
     const taskToDelete = tasks[index];
     const newTasks = tasks.filter((task) => task !== taskToDelete);
     setTasks(newTasks);
@@ -39,15 +44,15 @@ const TaskItem: React.FC<TaskItemProps> = ({  task, setTasks, index, tasks  }) =
   }
 
   function handleCancel() {
-    resetEditing()
+    resetEditing();
   }
 
   function handleSave() {
     const newTasks = tasks.map((task, index) =>
-      index === editingIndex ? { ...task, text: editValue } : task
+      index === editingIndex ? { ...task, text: editValue } : task,
     );
     setTasks(newTasks);
-    resetEditing()
+    resetEditing();
   }
 
   function handleComplete(index: number) {
@@ -57,48 +62,50 @@ const TaskItem: React.FC<TaskItemProps> = ({  task, setTasks, index, tasks  }) =
             ...task,
             completed: !task.completed,
           }
-        : task
+        : task,
     );
     setTasks(newTasks);
   }
-  const originalIndex = tasks.findIndex((t) => t === task);
+  const originalIndex = useMemo(
+    () => tasks.findIndex((t) => t === task),
+    [tasks, task],
+  );
+  //определяем индекс текущей задачи, чтобы выполнять операции над ней(редактирование или удаление.)Чтобы не было ошибок с индексом при отфильтрованном индексе.
 
   return (
     <li key={index} className="task">
-    <input
-      type="checkbox"
-      checked={task.completed}
-      onChange={() => handleComplete(originalIndex)}
-    />
-    {originalIndex === editingIndex && isEditing ? (
-      <>
-        <input
-          type="text"
-          value={editValue}
-          onChange={(e) => setEditValue(e.target.value)}
-        />
-        <div className="task__buttons">
-          <button onClick={handleSave}>Save</button>
-          <button onClick={handleCancel}>Cancel</button>
-        </div>
-      </>
-    ) : (
-      <>
-        <span
-          className={`task__text ${
-            task.completed ? "task_completed" : ""
-          }`}
-        >
-          {task.text}
-        </span>
+      <input
+        type="checkbox"
+        checked={task.completed}
+        onChange={() => handleComplete(originalIndex)}
+      />
+      {originalIndex === editingIndex && isEditing ? (
+        <>
+          <input
+            type="text"
+            value={editValue}
+            onChange={(e) => setEditValue(e.target.value)}
+          />
+          <div className="task__buttons">
+            <button onClick={handleSave}>Save</button>
+            <button onClick={handleCancel}>Cancel</button>
+          </div>
+        </>
+      ) : (
+        <>
+          <span
+            className={`task__text ${task.completed ? "task_completed" : ""}`}
+          >
+            {task.text}
+          </span>
 
-        <div className="task__buttons">
-          <button onClick={() => handleEdit(originalIndex)}>Edit</button>
-          <button onClick={() => handleDelete(originalIndex)}>Delete</button>
-        </div>
-      </>
-    )}
- </li>
+          <div className="task__buttons">
+            <button onClick={() => handleEdit(originalIndex)}>Edit</button>
+            <button onClick={() => handleDelete(originalIndex)}>Delete</button>
+          </div>
+        </>
+      )}
+    </li>
   );
 };
 export default TaskItem;

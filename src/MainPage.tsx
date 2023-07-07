@@ -8,6 +8,6 @@ const MainPage: React.FC = () => {
       <ToDo />
     </div>
   );
-}
+};
 
 export default MainPage;

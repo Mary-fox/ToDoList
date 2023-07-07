@@ -1,4 +1,4 @@
-import React, {  Dispatch, SetStateAction } from "react"
+import React, { Dispatch, SetStateAction } from "react";
 import { Task } from "../TaskItem/TaskItem";
 import "./TaskList.css";
 import TaskItem from "../TaskItem/TaskItem";
@@ -9,8 +9,11 @@ interface TaskListProps {
   setTasks: Dispatch<SetStateAction<Task[]>>;
 }
 
-const TaskList: React.FC<TaskListProps> = ({ tasks, filteredTasks, setTasks }) => {
- 
+const TaskList: React.FC<TaskListProps> = ({
+  tasks,
+  filteredTasks,
+  setTasks,
+}) => {
   return (
     <ol className="tasks">
       {filteredTasks.map((task, index) => (
@@ -25,4 +28,5 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, filteredTasks, setTasks }) =
     </ol>
   );
 };
+
 export default TaskList;

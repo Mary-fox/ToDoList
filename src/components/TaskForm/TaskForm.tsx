@@ -15,11 +15,16 @@ const TaskForm: React.FC<TaskFormProps> = ({ setTasks }) => {
 
   const handleSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (inputValue.trim() === "") return;
-    setTasks(prevTasks => [...prevTasks, { text: inputValue, completed: false }]);
-    setInputValue("");
-  }, [inputValue, setTasks]);
+      e.preventDefault();
+      if (inputValue.trim() === "") return;
+      setTasks((prevTasks) => [
+        ...prevTasks,
+        { text: inputValue, completed: false },
+      ]);
+      setInputValue("");
+    },
+    [inputValue, setTasks],
+  );
 
   return (
     <form className="tasks__form" onSubmit={handleSubmit}>
@@ -29,9 +34,9 @@ const TaskForm: React.FC<TaskFormProps> = ({ setTasks }) => {
         onChange={handleChange}
         placeholder="new task"
       />
-      <button  type="submit">Add Todo</button>
+      <button type="submit">Add Todo</button>
     </form>
   );
-}
+};
 
 export default React.memo(TaskForm);
